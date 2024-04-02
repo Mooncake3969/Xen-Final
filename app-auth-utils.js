@@ -99,7 +99,7 @@ async function getKeyStatus(key) {
             return keyParts[2]
         }
 
-        return 2
+        return "2"
     }
 }
 
