@@ -38,7 +38,7 @@ export async function authorize(request, response) {
       const authCookieValue = getAuthCookie(request)
       if (authCookieValue) {
         const keyStatus = await getKeyStatus(authCookieValue)
-        if (keyStatus.trim() == '0' || keyStatus.trim() == '1') {
+        if (keyStatus == '0' || keyStatus == '1') {
             setLastSeenCookie(response, Date.now())
             return true
         }
@@ -99,7 +99,7 @@ async function getKeyStatus(key) {
             return keyParts[2]
         }
 
-        return "-1"
+        return -1
     }
 }
 
