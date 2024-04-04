@@ -92,7 +92,6 @@ async function getKeyStatus(key) {
     lines.forEach(line => {
         if(line.split(',')[0] == key){
             return line.split(",")[2];
-            break;
         }
     })
         return -1
