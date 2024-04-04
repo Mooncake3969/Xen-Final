@@ -87,16 +87,12 @@ async function getKeyStatus(key) {
         }
     )
     const data = info.data
-    const userKeyList = data.split("\n")
+    const userKeyList = data.split(",")
 
     for (const i in userKeyList) {
-        const keyParts = userKeyList[i].split(",")
-        if (keyParts.length != 3) {
-            continue
-        }
-
-        if (keyParts[0] == key) {
-            return keyParts[2]
+        const keyTest = userKeyList[i]
+        if (keyTest == key) {
+            return keyParts[i+2]
         }
 
         return -1
