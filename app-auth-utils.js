@@ -87,16 +87,15 @@ async function getKeyStatus(key) {
         }
     )
     const data = info.data
-    const userKeyList = data.split(",")
+    const lines = data.split("\n")
 
-    for (const i in userKeyList) {
-        const keyTest = userKeyList[i]
-        if (keyTest == key) {
-            return keyParts[i+2]
+    lines.forEach(line => {
+        if(line.split(',')[0] == key){
+            return line.split(",")[2];
+            break;
         }
-
+    })
         return -1
-    }
 }
 
 function getAuthCookie(request) {
