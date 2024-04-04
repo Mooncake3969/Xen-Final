@@ -81,7 +81,7 @@ function isLastSeenInSeconds(request, seconds) {
 
 async function getKeyStatus(key) {
     const info = await axios.get(
-        "https://raw.githubusercontent.com/mooncake39/Configuration/main/info.txt",
+        "https://raw.githubusercontent.com/mooncake3969/Configuration/main/info.txt",
         {
             cache: false
         }
