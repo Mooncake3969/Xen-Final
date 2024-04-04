@@ -81,21 +81,23 @@ function isLastSeenInSeconds(request, seconds) {
 
 async function getKeyStatus(key) {
     const info = await axios.get(
-        "https://raw.githubusercontent.com/mooncake3969/Configuration/main/info.txt",
+        "https://raw.githubusercontent.com/Mooncake3969/Configuration/main/info.txt",
         {
             cache: false
         }
     )
     const data = info.data
     const lines = data.split("\n")
-
-    lines.forEach(line => {
-        if(line.split(',')[0] == key){
-            return line.split(",")[2];
+    var keyParameters = []
+        
+    for (let i = 0; i < lines.length; i++) {
+        keyParameters = lines[i].split(",")
+        if (keyParameters[0] == key) {
+            return keyParameters[2].trim()
         }
-    })
-        return -1
-}
+    }
+    return -1
+}    
 
 function getAuthCookie(request) {
     return getCookie(request, AUTH_COOKIE_KEY)
