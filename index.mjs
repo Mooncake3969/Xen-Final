@@ -13,7 +13,7 @@ app.use(express.static("src"));
 const bareServer = createBareServer('/y/');
 
 httpServer.on('request', async (req, res) => {
-  const isAuthorized = await authorize(req, res)
+  const isAuthorized = true //await authorize(req, res)
 
   if (!isAuthorized) {
     sendToUnauthorizedPage(res)
