@@ -41,8 +41,10 @@ const searchButton = document.getElementById("searchButton");
 
 searchButton.addEventListener('click', function() {
     const url = search(searchField.value, "lmao");
-    window.open(window.location + "/pframe.html?frame=" + url, "_blank")
-    window.parent.close();
+    const locValue = window.location + "/pframe.html?frame=" + url
+    console.log(locValue)
+    window.open(locValue)
+    //window.parent.close();
 })  
 
 searchField.onkeydown = function(e){
