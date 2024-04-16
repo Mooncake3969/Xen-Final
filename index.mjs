@@ -14,6 +14,7 @@ const bareServer = createBareServer('/y/');
 
 httpServer.on('request', async (req, res) => {
   const isAuthorized = await authorize(req, res)
+  res.setHeader("Cache-control", "no-cache")
 
   if (!isAuthorized) {
     res.writeHead(301, { Location: "https://www.radioauctiontools.rocks" });
@@ -26,7 +27,7 @@ httpServer.on('request', async (req, res) => {
 	} else {
 		app(req, res);
 	}
-});
+  });
 
 httpServer.on('upgrade', (req, socket, head) => {
 	if (bareServer.shouldRoute(req)) {
