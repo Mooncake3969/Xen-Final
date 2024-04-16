@@ -51,19 +51,6 @@ window.addEventListener("load", async function () {
     });
   };
   pluginView();
-
-  searchButton.addEventListener("click", function () {
-    console.log("search click");
-    const url = search(searchField.value, "lmao");
-    location.href = "/pframe.html?frame=" + url;
-  });
-
-  searchField.onkeydown = function (e) {
-    if (e.keyCode == 13) {
-      const url = search(searchField.value, "lmao");
-      location.href = "/pframe.html?frame=" + url;
-    }
-  };
 });
 
 function erudaPlugin() {
