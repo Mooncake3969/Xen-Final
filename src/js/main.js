@@ -5,7 +5,7 @@ function search(input, template) {
   } catch (err) {}
 
   try {
-    const url = new URL(`http://${input}`);
+    const url = new URL(`${location.protocol}//${input}`);
     if (url.hostname.includes(".")) return url.toString();
   } catch (err) {}
   template = "https://www.google.com/search?q=%s";
@@ -18,7 +18,7 @@ function urlify(input) {
   } catch (err) {}
 
   try {
-    const url = new URL(`http://${input}`);
+    const url = new URL(`${location.protocol}//${input}`);
     if (url.hostname.includes(".")) return url.toString();
   } catch (err) {}
   return input;
