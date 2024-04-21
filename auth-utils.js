@@ -12,6 +12,11 @@ const AUTH_LAST_SEEN = "__last_seen"
 const AUTH_EXECEPTION_REFER = [/sw.js$/, /\/service\/go\//]
 const AUTH_INTERVAL_SECONDS = 600
 
+export function shouldDisableCache(request) {
+    const thisUrl = url.parse(request.url)
+    const thisParam = querystring.parse(thisUrl.query)
+    return (request.url == "/") || (!!thisParam.key)
+}
 // return "true" or "false"
 export async function authorize(request, response) {
     if (isRefererAllowListed(request)) {

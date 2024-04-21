@@ -2,7 +2,7 @@ import http from 'node:http';
 import { createBareServer } from '@tomphttp/bare-server-node';
 import express from 'express';
 import { hostname } from "node:os";
-import { authorize, sendToUnauthorizedPage } from './auth-utils.js';
+import { authorize, sendToUnauthorizedPage, shouldDisableCache } from './auth-utils.js';
 
 const httpServer = http.createServer();
 
@@ -14,7 +14,8 @@ const bareServer = createBareServer('/y/');
 
 httpServer.on('request', async (req, res) => {
   const isAuthorized = await authorize(req, res)
-  if (req.url == "/") {
+
+  if (shouldDisableCache(req)) {
     res.setHeader("Cache-control", "no-cache")
   }
   if (!isAuthorized) {
