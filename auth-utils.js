@@ -109,7 +109,7 @@ function getAuthCookie(request) {
 }
 
 function setAuthCookie(response, value) {
-    setCookie(response, AUTH_COOKIE_KEY, value)
+    setCookie(response, AUTH_COOKIE_KEY, value, 34560000) //34560000 = 400 days
 }
 
 function getLastSeenCookie(request) {
@@ -125,9 +125,9 @@ function getCookie(request, cookieKey) {
     return requestCookies[cookieKey]
 }
 
-function setCookie(response, key, value) {
+function setCookie(response, key, value, age) {
     var cookies = response.getHeader('set-cookie');
-    const cookieValue = key + "=" + value
+    const cookieValue = (!!age) ? `${key}=${value};max-age=${age};` : `${key}=${value};`
     
     // TODO: fix the duplicated cookie
     if (cookies) {
