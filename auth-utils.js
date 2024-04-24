@@ -30,22 +30,37 @@ export async function authorize(request, response) {
     const thisUrl = url.parse(request.url)
     const thisParam = querystring.parse(thisUrl.query)
 
+    // Convert key status to number
+    const parseKeyStatus = (keyStatusString) => parseInt(keyStatusString?.trim() ?? "-1")
+
     // Registration session, verify key.
     if (thisParam.key) {
-      const keyStatus = await getKeyStatus(thisParam.key)
+      const [key, user, keyStatusString] = await getKeyStatus(thisParam.key)
+      const keyStatus = parseKeyStatus(keyStatusString)
+
       if (keyStatus == 1) {
         setAuthCookie(response, thisParam.key)
         setLastSeenCookie(response, Date.now())
         // TODO: return here reload without querystring
+        log(`[INFO] Register key for "${user}" successfully. Key status: ${keyStatusString}`)
         return true
+      } else {
+        log(`[ERROR] Failed to register key for "${user}". Key status: ${keyStatusString}`)
+        return false
       }
     } else { // parse cookie
       const authCookieValue = getAuthCookie(request)
       if (authCookieValue) {
-        const keyStatus = await getKeyStatus(authCookieValue)
-        if (keyStatus.trim() == '0' || keyStatus.trim() == '1') {
+        const [key, user, keyStatusString] = await getKeyStatus(authCookieValue)
+        const keyStatus = parseKeyStatus(keyStatusString)
+
+        if (keyStatus == 0 || keyStatus == 1) {
+            log(`[INFO] Authorize key for "${user}" successfully. Key status: ${keyStatusString}`)
             setLastSeenCookie(response, Date.now())
             return true
+        } else {
+            log(`[ERROR] Failed to authorize key for "${user}". Key status: ${keyStatusString}`)
+            return false
         }
       }
 
@@ -98,10 +113,10 @@ async function getKeyStatus(key) {
     for (let i = 0; i < lines.length; i++) {
         keyParameters = lines[i].split(",")
         if (keyParameters[0] == key) {
-            return keyParameters[2].trim()
+            return keyParameters // Return all fields for logging purpose
         }
     }
-    return -1
+    return ["", "", "-1"]
 }
 
 function getAuthCookie(request) {
@@ -139,4 +154,8 @@ function setCookie(response, key, value, age) {
     response.setHeader('set-cookie', cookies)
 }
 
+function log(message) {
+    const timestamp = (new Date()).toISOString()
+    console.log(`[${timestamp}] ${message}`)
+}
 
