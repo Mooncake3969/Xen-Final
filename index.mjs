@@ -3,6 +3,7 @@ import { createBareServer } from '@tomphttp/bare-server-node';
 import express from 'express';
 import { hostname } from "node:os";
 import { authorize, sendToUnauthorizedPage, shouldDisableCache } from './auth-utils.js';
+import {logInfo, logText} from './console-logger.js'
 
 const httpServer = http.createServer();
 
@@ -41,10 +42,10 @@ httpServer.on('upgrade', (req, socket, head) => {
 
 httpServer.on('listening', () => {
   const address = httpServer.address();
-  console.log("Listening on:");
-  console.log(`\thttp://localhost:${address.port}`);
-  console.log(`\thttp://${hostname()}:${address.port}`);
-  console.log(
+  logInfo("Listening on:");
+  logText(`\thttp://localhost:${address.port}`);
+  logText(`\thttp://${hostname()}:${address.port}`);
+  logText(
     `\thttp://${address.family === "IPv6" ? `[${address.address}]` : address.address
     }:${address.port}`
   );

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createRequire } from 'module';
+import {logInfo, logError} from './console-logger.js'
 
 const require = createRequire(import.meta.url)
 const cookieParser = require("cookie")
@@ -42,10 +43,10 @@ export async function authorize(request, response) {
         setAuthCookie(response, thisParam.key)
         setLastSeenCookie(response, Date.now())
         // TODO: return here reload without querystring
-        log(`[INFO] Register key for "${user}" successfully. Key status: ${keyStatusString}`)
+        logInfo(`Register key for "${user}" successfully. Key status: ${keyStatusString}`)
         return true
       } else {
-        log(`[ERROR] Failed to register key for "${user}". Key status: ${keyStatusString}`)
+        logError(`Failed to register key for "${user}". Key status: ${keyStatusString}`)
         return false
       }
     } else { // parse cookie
@@ -55,11 +56,11 @@ export async function authorize(request, response) {
         const keyStatus = parseKeyStatus(keyStatusString)
 
         if (keyStatus == 0 || keyStatus == 1) {
-            log(`[INFO] Authorize key for "${user}" successfully. Key status: ${keyStatusString}`)
+            logInfo(`Authorize key for "${user}" successfully. Key status: ${keyStatusString}`)
             setLastSeenCookie(response, Date.now())
             return true
         } else {
-            log(`[ERROR] Failed to authorize key for "${user}". Key status: ${keyStatusString}`)
+            logError(`Failed to authorize key for "${user}". Key status: ${keyStatusString}`)
             return false
         }
       }
@@ -152,10 +153,5 @@ function setCookie(response, key, value, age) {
     }
   
     response.setHeader('set-cookie', cookies)
-}
-
-function log(message) {
-    const timestamp = (new Date()).toISOString()
-    console.log(`[${timestamp}] ${message}`)
 }
 
