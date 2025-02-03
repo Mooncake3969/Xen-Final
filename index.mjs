@@ -20,7 +20,7 @@ httpServer.on('request', async (req, res) => {
     res.setHeader("Cache-control", "no-cache")
   }
   if (!isAuthorized) {
-    res.writeHead(301, { Location: "https://quiz-genius.coducation.tech" });
+    res.writeHead(301, { Location: "https://interlakeinquirer.netlify.app" });
     res.end();
     return
   }
