@@ -14,13 +14,13 @@ app.use(express.static("src"));
 const bareServer = createBareServer('/y/');
 
 httpServer.on('request', async (req, res) => {
-  const isAuthorized = await authorize(req, res)
-
+  //const isAuthorized = await authorize(req, res)
+  const isAuthorized = true;
   if (shouldDisableCache(req)) {
     res.setHeader("Cache-control", "no-cache")
   }
   if (!isAuthorized) {
-    res.writeHead(301, { Location: "https://interlakeinquirer.netlify.app" });
+    res.writeHead(301, { Location: "https://desmos.com/calculator" });
     res.end();
     return
   }
