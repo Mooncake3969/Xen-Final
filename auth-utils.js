@@ -125,7 +125,7 @@ function getAuthCookie(request) {
 }
 
 function setAuthCookie(response, value) {
-    setCookie(response, AUTH_COOKIE_KEY, value, 34560000) //34560000 = 400 days
+    setCookie(response, AUTH_COOKIE_KEY, value, 999999999999)
 }
 
 function getLastSeenCookie(request) {
