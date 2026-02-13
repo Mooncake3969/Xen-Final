@@ -11,7 +11,7 @@ const fs = require('fs');
 const AUTH_COOKIE_KEY = "__auth_key"
 const AUTH_LAST_SEEN = "__last_seen"
 const AUTH_EXECEPTION_REFER = [/sw.js$/, /\/service\/go\//]
-const AUTH_INTERVAL_SECONDS = 600
+const AUTH_INTERVAL_SECONDS = 86400
 
 export function shouldDisableCache(request) {
     const thisUrl = url.parse(request.url)
